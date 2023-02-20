@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { GetRoutes } from './routes'
+import Layout from './components/Layout'
+import { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import {  mydata } from './store/userSlice'
 
 function App() {
+  const dispatch = useDispatch()
+  const userState = useSelector((state) => state.user)
+  const getData = useCallback(async (token)=>{
+    const response = await axios.get(process.env.REACT_APP_USER_API_URL + "/my-account", {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    dispatch(mydata(response.data))
+  },[dispatch])
+
+  useEffect( ()=>{
+    if(userState.user != null && userState.user.hasOwnProperty("token")  && userState.user.data === undefined){
+      getData(userState.user.token)
+    }
+  },[userState, getData])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+        <GetRoutes />
+    </Layout>
   );
 }
 
