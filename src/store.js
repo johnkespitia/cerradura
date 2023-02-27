@@ -2,9 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer from './store/userSlice'
 import guardReducer from './store/guardSlice'
 import rolesReducer from './store/rolesSlice'
+import permissionsReducer from './store/PermissionSlice'
+import accountsReducer from './store/AccountSlice'
 import storage from 'redux-persist/lib/storage';
 import { setupListeners } from '@reduxjs/toolkit/query'
-//import { productsApi } from '../services/products'
 
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -17,8 +18,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   guard: guardReducer,
-  roles: rolesReducer
-  //[productsApi.reducerPath]: productsApi.reducer,
+  roles: rolesReducer,
+  accounts: accountsReducer,
+  permissions: permissionsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

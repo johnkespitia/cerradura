@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import * as Yup from 'yup'
-import { Button, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
+import { Button, FormControl, FormGroup, FormLabel, Spinner } from 'react-bootstrap'
 import { Field, Form, Formik } from 'formik'
 
 const FormGuard = (props) => {
@@ -18,9 +18,10 @@ const FormGuard = (props) => {
     })
   }
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true)
     setFormValues(values)
-    props.handleSubmit(values)
+    await props.handleSubmit(values)
     setSubmitting(false)
   }
 
@@ -49,6 +50,7 @@ const FormGuard = (props) => {
             </FormGroup>
 
             <Button variant="success" type="submit" disabled={isSubmitting}>
+              {isSubmitting && <Spinner />}
               Almacenar
             </Button>
           </Form>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import * as Yup from 'yup'
-import { Button, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
+import { Button, FormControl, FormGroup, FormLabel, Spinner } from 'react-bootstrap'
 import { Field, Form, Formik } from 'formik'
 import { useSelector } from 'react-redux'
 
@@ -8,7 +8,7 @@ const FormApp = (props) => {
   const guardState = useSelector((state) => state.guard)
   const [formValues, setFormValues] = useState({
     name: props.name,
-    guard_name: props.guard_name
+    guard_name: props.guard_name,
   });
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Valor requerido").max(20, "Nombre debe ser máximo de 20 caracteres"),
@@ -21,9 +21,10 @@ const FormApp = (props) => {
     })
   }
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true)
     setFormValues(values)
-    props.handleSubmit(values)
+    await props.handleSubmit(values)
     setSubmitting(false)
   }
 
@@ -51,10 +52,11 @@ const FormApp = (props) => {
           </FormControl.Feedback>
         </FormGroup>
 
-        <FormGroup className="mb-3" controlId="login-form">
+        <FormGroup className="mb-3" controlId="guard-name-account-form">
           <FormLabel>Aplicación</FormLabel>
           <Field
             name="guard_name"
+            isInvalid={touched.guard_name && !!errors.guard_name}
           >
             {({ field, form }) => (
               <select
@@ -63,7 +65,6 @@ const FormApp = (props) => {
                 controlid="guard_name"
                 placeholder="Aplicación"
                 autoComplete={"off"}
-                isInvalid={touched.name && !!errors.name}
                 onChange={(event) => {
                   form.setFieldValue(field.name, event.target.value);
                 }}
@@ -71,13 +72,14 @@ const FormApp = (props) => {
                 {guardState !== undefined && guardState.guard.map((g, idx)=> (<option key={`opti-${idx}`} value={g.name}>{g.name}</option>))}
               </select>
             )}
-        </Field>
+          </Field>
           <FormControl.Feedback type="invalid">
-            {errors.name}
+            {errors.guard_name}
           </FormControl.Feedback>
         </FormGroup>
 
         <Button variant="success" type="submit" disabled={isSubmitting}>
+          {isSubmitting && <Spinner />}
           Almacenar
         </Button>
       </Form>

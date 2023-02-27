@@ -6,6 +6,8 @@ import { logout } from './store/userSlice'
 import { useDispatch } from 'react-redux'
 import Guards from './pages/Guards'
 import Roles from './pages/Roles'
+import Accounts from './pages/Account'
+import Permissions from './pages/Permissions'
 
 let routes
 routes = [
@@ -34,6 +36,20 @@ routes = [
     'title': 'Roles',
     'path': '/roles',
     'page': <Roles />,
+    'permissions': [''],
+    'roles': ['root'],
+  },
+  {
+    'title': 'Usuarios',
+    'path': '/users',
+    'page': <Accounts />,
+    'permissions': [''],
+    'roles': ['root'],
+  },
+  {
+    'title': 'Permisos',
+    'path': '/permissions',
+    'page': <Permissions />,
     'permissions': [''],
     'roles': ['root'],
   },
