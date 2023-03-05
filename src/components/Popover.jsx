@@ -18,8 +18,9 @@ const PopoverWrapper =( props) =>{
       onToggle={setShow}
       rootClose={true}
       onHide={handlePopoverClose}
+      placement={props.placement}
       overlay={
-        <Popover id={`popover-positioned-right`}>
+        <Popover id={`popover-positioned-right`} className={"popover-size-lg"}>
           <Popover.Header as="h3">{props.title}</Popover.Header>
           <Popover.Body>
             {React.Children.map(props.children, (child) => {
@@ -29,7 +30,7 @@ const PopoverWrapper =( props) =>{
         </Popover>
       }
     >
-      <Button size={"sm"} variant={"success"} style={{borderRadius:"1rem" }} onClick={toggleShow} >{props.caller}</Button>
+      <Button size={"sm"} variant={"success"} className={props.placement==="left"?"float-end":"float-none"} style={{borderRadius:"1rem" }} onClick={toggleShow}>{props.caller}</Button>
     </OverlayTrigger>
   </>
 }

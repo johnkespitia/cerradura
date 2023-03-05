@@ -56,6 +56,7 @@ const List =(props) =>{
         <PopoverWrapper
           caller={<BiPlus />}
           title={"Asignar nuevo rol"}
+          placement={"right"}
         >
           <FormAddRol  handleSubmit={props.addRol} accountId={g.id}/>
         </PopoverWrapper>
@@ -71,6 +72,7 @@ const List =(props) =>{
         <PopoverWrapper
           caller={<BiPlus />}
           title={"Asignar nuevo superior"}
+          placement={"right"}
         >
           <FormAddSuperior handleSubmit={props.addSuperior} accountId={g.id}/>
         </PopoverWrapper>

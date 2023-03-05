@@ -8,6 +8,10 @@ const List =(props) =>{
     const indexGuard = evt.target.dataset.index;
     props.handleEdit(rolState.roles[indexGuard])
   }
+  const handlePermissions = (evt) => {
+    const indexGuard = evt.target.dataset.index;
+    props.handlePermission(rolState.roles[indexGuard])
+  }
 
   if(props.loading){
     return <Container className={"text-center justify-content-center"}>
@@ -30,7 +34,10 @@ const List =(props) =>{
       <td>{g.id}</td>
       <td>{g.name}</td>
       <td>{g.guard_name}</td>
-      <td><Button variant={"warning"} data-index={idx} className={"text-light"} onClick={handleEdit}>Editar</Button></td>
+      <td>
+        <Button variant={"warning"} data-index={idx} className={"text-light m-1"} onClick={handleEdit}>Editar</Button>
+        <Button variant={"info"} data-index={idx} className={"text-light m-1"} onClick={handlePermissions}>Permisos</Button>
+      </td>
     </tr>))}
     </tbody>
   </Table>
